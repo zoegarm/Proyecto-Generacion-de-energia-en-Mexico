@@ -5,7 +5,7 @@
 
 Primero realicé una conversión de los archivos .dbf a .csv, que bajamos de la página: https://maps.nrel.gov/rede-mexico/
 
-Una vez hecho esto, realicé una lectura rápida de los datos para familiarizarme con los archivos: 
+Una vez hecho esto, hice una lectura rápida de los datos para familiarizarme con los archivos: 
 
 ```R
 library(lubridate)
