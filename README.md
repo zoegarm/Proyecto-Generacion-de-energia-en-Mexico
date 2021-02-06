@@ -173,7 +173,7 @@ A continuación se enlistan los resultados gráficos:
 
 Por último se decidió realizar un análisis del consumo de energía por entidad federativa con datos del SIE  (http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=DIIE_C32_ESP), con el propósito de conocer el panorama actual del consumo energético por entidad federativa y estudiar si es factible usar plantas de energías para resolver el abasto de energía en la republica mexicana.
 
-Así, se construyeron series de tiempo para cada entidad con información de Enero de 2012 hasta Diciembre de 2017, que se pueden consultar en siguiente apartado del repositorio: https://github.com/AteneaCB/Equipo2/tree/main/Zoe_aport/imghttps://github.com/AteneaCB/Equipo2/tree/main/Zoe_aport/img
+Así, se construyeron series de tiempo para cada entidad con información de Enero de 2012 hasta Diciembre de 2017, que se pueden consultar en siguiente apartado del repositorio: https://github.com/AteneaCB/Equipo2/tree/main/Zoe_aport/img
 
 Es importante mencionar el análisis que se realizó para el consumo total de la república en GW/h, con respecto al tiempo, en el mismo periodo de años: 
 
