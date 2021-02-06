@@ -1,0 +1,21 @@
+La producción de energía eléctrica es una de las principales actividades emisoras de CO2.
+Es por ello que la búsqueda de alternativas sostenibles para su generación es de vital importancia.
+Dada la importancia de este tema, nos dimos a la tarea de plantear el presente proyecto.
+
+Hipótesis:
+México tiene un gran potencial para la generación de energía limpia y puede emprender un cambio sustentable en materia energética.
+
+Pregunta de investigación:
+¿Qué tan viable es la generación de energía menos contaminante en México?
+
+Para tener un panorama más claro de esta situación en nuestro país, a continuación presentamos los resultados más relevantes.
+
+Integrantes del Equipo 2:
+Atenea De La Cruz Brito
+Zoé Ariel García Martínez
+Gerardo Miguel Pérez Solis
+
+Fuentes:
+ESMAP (2020). Global Photovoltaic Power Potential by Country. Washington: World Bank. Recuperado de: https://globalsolaratlas.info/global-pv-potential-study
+NREL (2021). Irradiación diaria normal, inventario de generación e inventario potencial de energía eléctrica.  US: NREL. Recuperado de: https://maps.nrel.gov/rede-mexico/
+ITESO (30 de marzo de 2020). Consumo de energía eléctrica por entidad federativa. México: SENER, Medición en gigawatts-hora, periodo 2015-2019. Recuperado de: https://unidadinformacion.iteso.mx/2020/03/30/consumo-de-energia-electrica-por-entidad-federativa-2/
