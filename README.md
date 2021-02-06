@@ -106,8 +106,6 @@ unique(pot$plant_type) # <- hay 5 tipos de plantas
 
 A continuación se realizó un análisis exploratorio donde se obtuvieron diferentes gráficos, algunos de ellos fueron los siguientes:
 
-![Plat_rank](graphs/plat_rank.png "Plat_rank")
-
 <p align="center">
   <img src="graphs/plat_rank.png" "Plat_rank" alt="Sublime's custom image"/>
 </p>
