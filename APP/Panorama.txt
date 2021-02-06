@@ -1,0 +1,22 @@
+A partir del análisis realizado con base en los datos adquiridos correspondientes al consumo
+eléctrico en las entidades federativas de la república mexicana, se construyeron las siguientes
+gráficas. 
+
+Estas son representativas de que el consumo eléctrico de la república, en general, está 
+aumentando de manera anual, por lo que surge la necesidad de encontrar fuentes que puedan
+abastecer la exigencia energética del país.
+
+Lista de gráficos de Consumo Eléctrico GW/h en el periodo 2012-2017:
+
+[1] -> [Aguascalientes, Baja California, Baja California Sur]
+[2] -> [Campeche, Coahuila, Colima]
+[3] -> [Chiapas, Chihuahua, CDMX]
+[4] -> [Durango, Guanajuato, Guerrero] 
+[5] -> [Hidalgo, Jalisco, Estado de México] 
+[6] -> [Michoacán, Morelos, Nayarit]
+[7] -> [NuevoLeón, Oaxaca, Puebla]
+[8] -> [Querétaro, Quintana Roo, San Luis Potosí]  
+[9] -> [Sinaloa, Sonora, Tabasco]
+[10] -> [Tamaulipas, Tlaxcala, Veracruz]
+[11] -> [Yucatán, Zacatecas]
+[12] -> Total Nacional
