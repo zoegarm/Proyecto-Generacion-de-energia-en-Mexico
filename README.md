@@ -163,63 +163,28 @@ A continuación se enlistan los resultados gráficos:
   <img src="graphs/generacion_promedio_estado.png" "gen_mean_state" alt="NF"/>
 </p>
 
-![pot_mean](https://github.com/AteneaCB/Equipo2/blob/main/graphs/pot_promedio.png "pot_mean")
+<p align="center">
+  <img src="graphs/pot_promedio.png" "gen_mean_state" alt="NF"/>
+</p>
 
-![pot_mean_state](https://github.com/AteneaCB/Equipo2/blob/main/graphs/pot_promedio_edo.png "pot_mean_state")
+<p align="center">
+  <img src="graphs/pot_promedio_edo.png" "gen_mean_state" alt="NF"/>
+</p>
 
-Por último se decidió realizar un análisis del consumo de energía por entidad federativa con datos del SIE  (http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=DIIE_C32_ESP)
+Por último se decidió realizar un análisis del consumo de energía por entidad federativa con datos del SIE  (http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=DIIE_C32_ESP), con el propósito de conocer el panorama actual del consumo energético por entidad federativa y estudiar si es factible usar plantas de energías para resolver el abasto de energía en la republica mexicana.
 
-Con lo que construyeron series de tiempo para cada entidad con información de Enero de 2012 hasta Diciembre de 2017.
+Así, se construyeron series de tiempo para cada entidad con información de Enero de 2012 hasta Diciembre de 2017, que se pueden consultar en siguiente apartado del repositorio: https://github.com/AteneaCB/Equipo2/tree/main/Zoe_aport/imghttps://github.com/AteneaCB/Equipo2/tree/main/Zoe_aport/img
 
+Es importante mencionar el análisis que se realizó para el consumo total de la república en GW/h, con respecto al tiempo, en el mismo periodo de años: 
 
-También se realizaron representaciones para el consumo de energía en barras y en tipo pastel: 
+<p align="center">
+  <img src="Zoe_aport/img/ConsumoTotMex.png" "Consumo Total" alt="NF"/>
+</p>
 
-```R
+Esta gráfica es representativa de que el consumo eléctrico de la república, en general, está aumentando de manera anual, por lo que surge la necesidad de encontrar fuentes que puedan abastecer la exigencia energética del país.
 
-#graficas de pastel para representar quién consume más
+También se realizó un análisis del consumo energético promedio a través de los años para las entidades de la república mexicana: 
 
-#creo un df conveniente para esta representación
-cakeE <- lapply(tConsumoEE_sD, mean)
-cakeE <- as.data.frame(cakeE)
-cakeE <- cakeE[-c(1, 34, 35)]
-cakeE <- t(cakeE)
-cakeE <- as.data.frame(cakeE)
-cakeE[,"Estado"] <- c(row.names(cakeE))
-cakeE <- rename(cakeE, Consumo = V1)
-
-#hago una columna de porcentaje: 
-
-cakeE[,"Porcentaje"] <- (cakeE$Consumo/sum(cakeE$Consumo))*100
-
-colorr = c("#af601a", "#273746", "#424949", "#eaeded", "#b3b6b7", "#f6ddcc",
-           "#049514", "#260ea4", "#97fd18", "#bd032c", "#10f2c5",
-           "#786913", "#b630b3", "#c62d58", "#1465e1", "#7c15a2", 
-           "#7644f4", "#4a8ce4", "#f38f7c", "#d3b928", "#45230b",
-           "#8692b4", "#f0f80c", "#b54f32", "#f3e4cf", "#7a6cfb",
-           "#f553d6", "#675a02", "#dbe2d9", "#e8f73f",
-           "#c15583", "#fce99a")
-
-length(colorr); colorr[10]
-
-pie(cakeE$Consumo)
-
-ggplot(cakeE, mapping = aes(x = "", y= Porcentaje, fill =Estado)) +
-  geom_bar(stat = "identity", color = "white") + 
-  coord_polar(theta = "y") + 
-  geom_text(aes(label=round(Porcentaje)),
-            position=position_stack(vjust=0.5)) + 
-  theme_void() +
-  scale_fill_manual(values=colorr) + 
-  ggtitle("Porcentaje de Consumo Eléctrico Por Entidad")
-
-par(mar=c(11,4,4,4))
-barplot(height = cakeE$Porcentaje, names = cakeE$Estado, col = "#bd032c", horiz = F, las=2,
-        font.lab = 1, col.lab = "black", cex.lab = 2,
-        main = "Porcentaje de Consumo Eléctrico Por Entidad") 
-
-par(mar=c(11,4,4,4))
-barplot(height = cakeE$Consumo, names = cakeE$Estado, col = "#bd032c", horiz = F, las=2,
-        font.lab = 1, col.lab = "black", cex.lab = 2,
-        main = "Porcentaje de Consumo Eléctrico Por Entidad GW/h") 
-```
-
+<p align="center">
+  <img src="Zoe_aport/img/ConsumoE_por_Entidad.png" "Consumo Por Entidad Federativa" alt="NF"/>
+</p>
