@@ -151,11 +151,17 @@ Resultado: relación positiva
 
 Resultado: sin relación aparente
 
-Se quizó hacer otros gráficos relacionados al los promedios de generación y potencial de energía en GWh, los resultados fueron los siguientes:
+Enseguida, se realizaron gráficas para conocer la relación entre la generación eléctrica por tipo de planta, para conocer cuál es la planta con mayor desempeño actual, como también se realizaron gráficas de barra para conocer la generación de energía debido a estas plantas por estado, de igual forma se graficaron tanto el potencial promedio por tipo de planta, para evaluar su desempeño, así como el potencial promedio que tiene cada estado de la república para generar energía. 
 
-![gen_mean](https://github.com/AteneaCB/Equipo2/blob/main/graphs/generacion_promedio.png "gen_mean")
+A continuación se enlistan los resultados gráficos:
 
-![gen_mean_state](https://github.com/AteneaCB/Equipo2/blob/main/graphs/generacion_promedio_estado.png "gen_mean_state")
+<p align="center">
+  <img src="graphs/generacion_promedio.png" "gen_mean" alt="NF"/>
+</p>
+
+<p align="center">
+  <img src="graphs/generacion_promedio_estado.png" "gen_mean_state" alt="NF"/>
+</p>
 
 ![pot_mean](https://github.com/AteneaCB/Equipo2/blob/main/graphs/pot_promedio.png "pot_mean")
 
