@@ -2,6 +2,18 @@
 
 ## Proyecto: Generación de energía en México: alternativas limpias.
 
+La producción de energía eléctrica es una de las principales actividades emisoras de CO2.
+
+Es por ello que la búsqueda de alternativas sostenibles para su generación es de vital importancia.
+
+Dada la importancia de este tema, nos dimos a la tarea de plantear el presente proyecto.
+
+### Hipótesis: 
+México tiene un gran potencial para la generación de energía limpia y puede emprender un cambio sustentable en materia energética.
+
+### Pregunta de investigación:
+¿Qué tan viable es la generación de energía menos contaminante en México?
+
 ### Equipo 2: 
 - Atenea De La Cruz Brito
 - Zoé Ariel García Martínez 
