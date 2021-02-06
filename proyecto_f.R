@@ -10,6 +10,11 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(foreign)
+library(leaflet)
+library(leaflet.extras)
+library(sf)
+library(tidyverse)
+library(rworldxtra)
 
 #Directorio de trabajo
 setwd("Aqui va la direccion")
@@ -251,7 +256,34 @@ ggplot(baja_california,aes(x=potencial,y=ESTADO,fill =plant_type))+
   xlab("Potencial en GWh")+ylab("Estado")+
   labs(fill = "Tipo Planta")
 
-####################### V. ANALISIS DE CONSUMO DE ENERGÍA ###########################
+############################# V. Mapa Interactivo ################################
+#Datos
+pot <- read.csv("mx_inventory_pot_new.csv")
+
+#Generar mapa
+leaflet() %>% addTiles() %>% 
+  addCircles(data = pot, lat = ~lat, lng = ~lon) %>% 
+  addMarkers(data = pot, lat = ~lat, lng = ~lon, clusterOptions = markerClusterOptions())
+
+#Cambiar colores
+Number_pt <- pot$plant_type %>% unique() %>% length()
+Names_pt <- pot$plant_type %>% unique()
+Colores <- c('#1f78b4', '#e41a1c', '#ff7f00', '#4daf4a', '#a6cee3')
+pal <- colorFactor(Colores, domain = Names_pt)
+#Mapa con colores
+m <- leaflet() %>% addTiles() %>% addCircles(data = pot, lat = ~lat, lng = ~lon, 
+                                             color = pal(pot$plant_type), fillOpacity = 1, popup = ~potencial, label = pot$potencial,
+                                             group = "Plantas") %>%
+  addMarkers(data = pot, lat = ~lat, lng = ~lon, clusterOptions = markerClusterOptions())
+
+#Leyenda
+m <- m %>% addLegend(data = pot, "topright", pal = pal, 
+                     values = ~plant_type, title = "Tipo de planta", opacity = 0.8, group = "Leyenda")
+#Capas
+m <- m %>% addLayersControl(overlayGroups = c("Plantas", "Leyenda"),
+                            options = layersControlOptions(collapsed = F))
+
+#################### VI. ANALISIS DE CONSUMO DE ENERGÍA ##########################
 #lectura del consumo de energía eléctrica por entidad federativa 
 
 ConsumoEE <- read.csv("Consumo_por_enttidad_2012_2017.csv")
