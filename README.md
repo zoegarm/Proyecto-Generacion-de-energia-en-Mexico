@@ -7,222 +7,136 @@
 - Zoé Ariel García Martínez 
 - Gerardo Miguel Pérez Solis 
 
-Primero realicé una conversión de los archivos .dbf a .csv, que bajamos de la página: https://maps.nrel.gov/rede-mexico/
 
-Una vez hecho esto, hice una lectura rápida de los datos para familiarizarme con los archivos: 
+Primero se realizó la descarga de los dataset principales de la siguiente página: https://maps.nrel.gov/rede-mexico/
 
-```R
-library(lubridate)
-library(dplyr)
-library(tidyr)
+Se tomaron los archivos .dbf y se transformaron en archivos .csv:
 
-#Realizo apertura de los datos .dbf convertidos a .csv
+```r
+library(foreign)
 
+#Directorio de trabajo
+setwd("Aqui va la direccion")
+
+# Extracción de datos .dbf y transformación a .csv
+i_gen <- read.dbf("/mx_inventory_gen_new/mx_inventory_gen_new.dbf")
+i_pot <- read.dbf("/mx_inventory_pot_new/mx_inventory_pot_new.dbf")
+i_dni <- read.dbf("/nsrdb_mx_dni_new/nsrdb_mx_dni_new.dbf")
+
+write.csv(i_gen,"mx_inventory_gen_new.csv",row.names = F)
+write.csv(i_pot,"mx_inventory_pot_new.csv",row.names = F)
+write.csv(i_dni,"nsrdb_mx_dni_new.csv",row.names = F)
+```
+
+Una vez que se tienen los .csv  se realiza la lectura de los mismos y se hacen unas consultas sobre la información: 
+
+```r
+#Lectura de los datos 
 gen <- read.csv("mx_inventory_gen_new.csv")
-head(gen); names(gen); class(gen)
+head(gen); tail(gen); names(gen); class(gen); str(gen); summary(gen)
 
 pot <- read.csv("mx_inventory_pot_new.csv")
-head(pot); names(pot); class(pot)
+head(pot); tail(pot); names(pot); class(pot); str(pot); summary(pot)
 
 dni <- read.csv("nsrdb_mx_dni_new.csv")
-head(dni); names(dni); class(dni)
+head(dni); tail(dni); names(dni); class(dni); str(dni); summary(dni)
 
+rank <- read.csv("solargis_pvpot_countryrank_2020.csv")
+head(rank); tail(rank); names(rank); class(rank); str(rank); summary(rank)
 
-#reviso qué tantas veces aparece un estado en gen
+#Seleccionar y renombrar columnas a emplear
+rank <- select(rank, iso = ISO_A3, country = Country, region = WorldBankRegion,
+               theoghi = Average_theoretical_potential_GHI_kWh_m2dayLongterm,
+               pracpvout = Average_practical_potential_PVOUT_Level1_kWh_kWdayLongterm,
+               avlcoe = Average_economic_potential_LCOE_USD_kWh2018,
+               pvpc = AveragePVseasonality_index_longterm)
+head(rank); tail(rank); length(rank)
 
-group_by(gen, ESTADO) # <- hay 27 estados listados
+########################## II. Consulta de datos ########################################
 
-cuentaEstado <- count(gen, ESTADO) # <- cuento qué tantas veces se repite un estado
+#Cuantas veces aparece un estado en gen
+
+unique(gen$ESTADO) # <- hay 27 estados listados
+
+(cuentaEstado <- count(gen, ESTADO)) # <- cuento qué tantas veces se repite un estado
 
 cuentaEstado[cuentaEstado$n == max(cuentaEstado$n), ] # <- el estado más repetido es Veracruz
 
-cuentaEstado[cuentaEstado$n == min(cuentaEstado$n), ] # <- el estado que menos aparece
+cuentaEstado[cuentaEstado$n == min(cuentaEstado$n), ] # <- Colima e Hidalgo los que menos aparecen
 
-#Ahora hago un análogo con las plantas que se tienen listadas en gen: 
+#Análisis tipo de plantas en gen: 
 
-group_by(gen, plant_type) # <- hay 5 tipos de plantas
+unique(gen$plant_type) # <- hay 5 tipos de plantas
 
-cuentaPlanta <- count(gen, plant_type) # <- enlisto los tipo de plantas
+(cuentaPlanta <- count(gen, plant_type)) # <- enlisto los tipo de plantas
 
-# tenemos 96 plantas de poder hídrico funcionando...
+# tenemos 96 plantas de poder h?drico funcionando...
 
-#Ahora voy a comparar estos datos con los de la BD pot
 
-group_by(pot, ESTADO) # <- aquí se enlistan 32 estados potenciales para tener plantas generadoras
+#datos con los de la BD pot
 
-cuentaEstadoP <- count(pot, ESTADO)
+unique(pot$ESTADO) # <- 32 estados potenciales para tener plantas generadoras
 
-cuentaEstadoP[cuentaEstadoP$n == max(cuentaEstadoP$n), ] # <- el EDO que aparece más veces es jalísco
+(cuentaEstadoP <- count(pot, ESTADO)) #<- cuanto se repite cada estado
+
+cuentaEstadoP[cuentaEstadoP$n == max(cuentaEstadoP$n), ] # <- el EDO que aparece m?s veces es jal?sco
 
 cuentaEstadoP[cuentaEstadoP$n == min(cuentaEstadoP$n), ] #el EDO que aparece menos es Tlaxcala
 
-#ahora analizo las plantas que se tienen listadas en pot: 
+#plantas que se tienen listadas en pot: 
 
-group_by(pot, plant_type) # <- hay 5 tipos de plantas
+unique(pot$plant_type) # <- hay 5 tipos de plantas
 
-cuentaPlantaP <- count(pot, plant_type) # <- enlisto los tipo de plantas
+(cuentaPlantaP <- count(pot, plant_type)) # <- cuanto se repiten tipo de plantas
 
-#la planta en pot que se repite más veces es la geotérmica con 1089 veces.
+#la planta en pot que se repite más veces es la geot?rmica con 1089 veces.
 ```
 
-Luego realicé  un análisis de la energía consumida por entidad federativa con datos del SIE  (http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=DIIE_C32_ESP)
-Con lo que construí series de tiempo para cada entidad con información de Enero de 2012 hasta Diciembre de 2017. 
+A continuación se realizó un análisis exploratorio donde se obtuvieron diferentes gráficos, algunos de ellos fueron los siguientes:
 
-A continuación el código: 
+![Plat_rank](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plat_rank.png "Plat_rank")
 
-```R
-#ahora voy a realizar una lectura del consumo de energía eléctrica por entidad federativa 
+![Plot_gen2](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_gen2.png "Plot_gen2")
 
-ConsumoEE <- read.csv("Consumo_por_enttidad_2012_2017.csv")
-head(ConsumoEE); str(ConsumoEE)
+![Plot_pot](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_pot.png "Plot_pot")
 
-tConsumoEE <- t(ConsumoEE[-1])
+Posteriormente se realizaron diferentes modelos de relaciones con el dataset de rank, se obtuvieron los siguientes resultados:
 
-colnames(tConsumoEE) <- ConsumoEE[,1] #renombro las columnas con los nombres de la primer columna
+![lm_teo_prac](https://github.com/AteneaCB/Equipo2/blob/main/graphs/gen_teo_prac.png "lm_teo_prac")
 
-tConsumoEE <- as.data.frame(tConsumoEE) # traspongo la matriz y la paso a DF
-tConsumoEE <- rename(tConsumoEE, CDMX = DistritoFederal)
-#
+Resultado: relación positiva, potencial de generación de energía teórico y práctico se relacionan.
 
-#construyo las fechas: 
-library(lubridate)
+![lm_station_pot](https://github.com/AteneaCB/Equipo2/blob/main/graphs/stations_pot.png "lm_station_pot")
 
-tConsumoEE[, "Fecha"] <- c(names(ConsumoEE[-1]))
-tConsumoEE$Fecha <- substring(tConsumoEE$Fecha, 2, 11)
+Resultado: relación negativa, a menor variabilidad entre estaciones del año, mayor potencial práctico.
 
-tConsumoEE$Fecha <- as.Date(tConsumoEE$Fecha, format = "%m.%d.%Y") #2012 <- %m.%d.%Y , 2015 <- %d.%m.%Y
-str(tConsumoEE); #reviso si ya son type Date: CHECK
+Ahora solo con países de America Latina y el Caribe:
+![lm_ame_1](https://github.com/AteneaCB/Equipo2/blob/main/graphs/lm_teo_prac_ame.png "lm_ame_1")
 
-#limpio los datos 2012:
-tConsumoEE <-  select(tConsumoEE, -V34)
+Resultado: relación positiva
 
-#añado la columna año, porque voy a sacar el promedio por año 
-tConsumoEE[, "year"] <- year(tConsumoEE$Fecha)
+![lm_ame_2](https://github.com/AteneaCB/Equipo2/blob/main/graphs/lm_stations_pot_ame.png "lm_ame_2")
 
-Estados <- colnames(tConsumoEE)
+Resultado: sin relación aparente
 
+Se quizó hacer otros gráficos relacionados al los promedios de generación y potencial de energía en GWh, los resultados fueron los siguientes:
 
-#así obtengo el promedio por año:
-#quito los datos de Diciembre, hay algo extraño en ellos, en diciembre el consumo debería crecer...
-tConsumoEE_sD <- tConsumoEE[-c(12, 24, 36, 48, 60, 72), ]
+![gen_mean](https://github.com/AteneaCB/Equipo2/blob/main/graphs/generacion_promedio.png "gen_mean")
 
-prom_anual <- tConsumoEE_sD %>%
-      group_by(year) %>%
-          summarise(Eprom = mean(TotalNacional1))
+![gen_mean_state](https://github.com/AteneaCB/Equipo2/blob/main/graphs/generacion_promedio_estado.png "gen_mean_state")
 
-prom_anual <- as.data.frame(prom_anual)
-str(prom_anual)
+![pot_mean](https://github.com/AteneaCB/Equipo2/blob/main/graphs/pot_promedio.png "pot_mean")
 
-plot(prom_anual, xlab = "Tiempo",
-     main = "Consumo electrico Total Gw/h", 
-     sub = "Consumo Eléctrico por en México periodo 2012-2017")
+![pot_mean_state](https://github.com/AteneaCB/Equipo2/blob/main/graphs/pot_promedio_edo.png "pot_mean_state")
 
-prom_anual %>%
-  ggplot() + 
-  aes(x = year,y = Eprom)  + 
-  geom_point() + 
-  theme_light() +
-  geom_smooth(method =  "lm") +
-  
-  annotate("text", x = 2017, y=17000, label = expression(paste('Recta estimada:',
-                                                               ' ',
-                                                               hat(y)[i] == -402118.66  + 208.4*x[i])),
-           adj = 1, font = 2) +
-  ggtitle("Consumo promedio de Energía en México") +
-  xlab("Años") + 
-  ylab("Energía promedio Gw/h")
+Por último se decidió realizar un análisis del consumo de energía por entidad federativa con datos del SIE  (http://sie.energia.gob.mx/bdiController.do?action=cuadro&cvecua=DIIE_C32_ESP)
 
-attach(prom_anual) 
-
-depE <- lm(Eprom~year)
-summary(depE)
-
-lm(ts(prom_anual)~time(prom_anual))
-
-#veo los elementos de Aguascalientes
-for (i in tConsumoEE[,1]){
-  print(i)
-}
-
-#defino un ts para Aguascalientes: 
-#fecha inicial y final:
-head(tConsumoEE$Fecha, 1); tail(tConsumoEE$Fecha, 1)
+Con lo que construyeron series de tiempo para cada entidad con información de Enero de 2012 hasta Diciembre de 2017.
 
 
-#graficas de ts de cada estado 
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,2:4], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,5:7], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,8:10], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,11:13], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,14:16], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,17:19], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,20:22], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,23:25], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,26:28], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,29:31], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-
-tsTotalNacional_1 <- ts(tConsumoEE_sD[,32:33], start = 2012, end = 2018, frequency = 11)
-aggregate(tsTotalNacional_1) %>% 
-  plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
-       sub = "Consumo en el periodo 2012 - 2018",
-       col = "red", lty = 3 ,lwd = 2)
-```
-
-Finalmente obtuve las series de tiempo y realicé representaciones para el consumo de energía en barras y en tipo pastel: 
+También se realizaron representaciones para el consumo de energía en barras y en tipo pastel: 
 
 ```R
-
-
 
 #graficas de pastel para representar quién consume más
 
