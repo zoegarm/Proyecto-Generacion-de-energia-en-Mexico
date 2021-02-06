@@ -12,8 +12,8 @@ library(ggplot2)
 library(foreign)
 
 #Directorio de trabajo
-#setwd("Aqui va la direccion")
-setwd("C:/Users/Familia Solis/Documents/Documentos de Gerardo/CURSO DATA SCIENCE/Proyecto") #Cambiar según usuario
+setwd("Aqui va la direccion")
+
 
 # Extracción de datos .dbf y transformación a .csv
 i_gen <- read.dbf("/mx_inventory_gen_new/mx_inventory_gen_new.dbf")
