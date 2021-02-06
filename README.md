@@ -6,7 +6,7 @@ La producción de energía eléctrica es una de las principales actividades emis
 
 Es por ello que la búsqueda de alternativas sostenibles para su generación es de vital importancia.
 
-Dada la importancia de este tema, nos dimos a la tarea de plantear el presente proyecto.
+Dada la trascendencia de este tema, nos dimos a la tarea de plantear el presente proyecto.
 
 ### Hipótesis: 
 México tiene un gran potencial para la generación de energía limpia y puede emprender un cambio sustentable en materia energética.
@@ -40,7 +40,7 @@ write.csv(i_pot,"mx_inventory_pot_new.csv",row.names = F)
 write.csv(i_dni,"nsrdb_mx_dni_new.csv",row.names = F)
 ```
 
-Una vez que se tienen los .csv  se realiza la lectura de los mismos y se hacen unas consultas sobre la información: 
+Una vez que se tienen los .csv  se realizó la lectura de los mismos y se hacieron consultas sobre la información: 
 
 ```r
 #Lectura de los datos 
@@ -104,37 +104,50 @@ unique(pot$plant_type) # <- hay 5 tipos de plantas
 #la planta en pot que se repite más veces es la geot?rmica con 1089 veces.
 ```
 
-A continuación se realizó un análisis exploratorio donde se obtuvieron diferentes gráficos, algunos de ellos fueron los siguientes:
+A continuación se realizó un análisis exploratorio donde se obtuvieron diferentes gráficos, para estudiar el promedio teórico, práctico y económico del PV mundial, la generación en $GW/h$ por ubicación geográfica y por tipo de planta, así como el potencial energético en $GW/h$ dada la ubicación geográfica y tipo de planta.
+
+
+Entre las gráficas realizadas se encuentran las siguientes:
 
 <p align="center">
-  <img src="graphs/plat_rank.png" "Plat_rank" alt="Sublime's custom image"/>
+  <img src="graphs/plat_rank.png" "Plat_rank" alt="NF"/>
 </p>
 
 <p align="center">
-  <img src="graphs/plot_gen2.png" "Plot_gen2" "Plat_rank" alt="Sublime's custom image"/>
+  <img src="graphs/plot_gen2.png" "Plot_gen2" "Plat_rank" alt="NF"/>
 </p>
 
 <p align="center">
-  <img src="graphs/plot_pot.png" "Plot_pot" "Plat_rank" alt="Sublime's custom image"/>
+  <img src="graphs/plot_pot.png" "Plot_pot" "Plat_rank" alt="NF"/>
 </p>
 
 
-Posteriormente se realizaron diferentes modelos de relaciones con el dataset de rank, se obtuvieron los siguientes resultados:
+Posteriormente se realizaron diferentes modelos de relaciones con el dataset de rank, se obtuvieron los siguientes resultados, que muestran la correlación y la tendencia entre los datos de interés.
 
-![lm_teo_prac](https://github.com/AteneaCB/Equipo2/blob/main/graphs/gen_teo_prac.png "lm_teo_prac")
+
+<p align="center">
+  <img src="graphs/gen_teo_prac.png" "lm_teo_prac" alt="NF"/>
+</p>
 
 Resultado: relación positiva, potencial de generación de energía teórico y práctico se relacionan.
 
-![lm_station_pot](https://github.com/AteneaCB/Equipo2/blob/main/graphs/stations_pot.png "lm_station_pot")
+<p align="center">
+  <img src="graphs/stations_pot.png" "lm_station_pot" alt="NF"/>
+</p>
 
 Resultado: relación negativa, a menor variabilidad entre estaciones del año, mayor potencial práctico.
 
 Ahora solo con países de America Latina y el Caribe:
-![lm_ame_1](https://github.com/AteneaCB/Equipo2/blob/main/graphs/lm_teo_prac_ame.png "lm_ame_1")
+
+<p align="center">
+  <img src="graphs/lm_teo_prac_ame.png" "lm_ame_1" alt="NF"/>
+</p>
 
 Resultado: relación positiva
 
-![lm_ame_2](https://github.com/AteneaCB/Equipo2/blob/main/graphs/lm_stations_pot_ame.png "lm_ame_2")
+<p align="center">
+  <img src="graphs/lm_stations_pot_ame.png" "lm_ame_2" alt="NF"/>
+</p>
 
 Resultado: sin relación aparente
 
