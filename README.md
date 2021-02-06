@@ -108,6 +108,10 @@ A continuación se realizó un análisis exploratorio donde se obtuvieron difere
 
 ![Plat_rank](graphs/plat_rank.png "Plat_rank")
 
+<p align="center">
+  <img src="graphs/plat_rank.png" "Plat_rank" alt="Sublime's custom image"/>
+</p>
+
 ![Plot_gen2](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_gen2.png "Plot_gen2")
 
 ![Plot_pot](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_pot.png "Plot_pot")
