@@ -24,7 +24,7 @@ write.csv(i_gen,"mx_inventory_gen_new.csv",row.names = F)
 write.csv(i_pot,"mx_inventory_pot_new.csv",row.names = F)
 write.csv(i_dni,"nsrdb_mx_dni_new.csv",row.names = F)
 
-#parte atenea
+#Lectura de los datos
 
 gen <- read.csv("mx_inventory_gen_new.csv")
 head(gen); tail(gen); names(gen); class(gen); str(gen); summary(gen)
