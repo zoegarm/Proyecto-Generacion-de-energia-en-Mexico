@@ -110,9 +110,14 @@ A continuación se realizó un análisis exploratorio donde se obtuvieron difere
   <img src="graphs/plat_rank.png" "Plat_rank" alt="Sublime's custom image"/>
 </p>
 
-![Plot_gen2](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_gen2.png "Plot_gen2")
+<p align="center">
+  <img src="graphs/plot_gen2.png" "Plot_gen2" "Plat_rank" alt="Sublime's custom image"/>
+</p>
 
-![Plot_pot](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_pot.png "Plot_pot")
+<p align="center">
+  <img src="graphs/plot_pot.png" "Plot_pot" "Plat_rank" alt="Sublime's custom image"/>
+</p>
+
 
 Posteriormente se realizaron diferentes modelos de relaciones con el dataset de rank, se obtuvieron los siguientes resultados:
 
