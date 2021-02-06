@@ -106,7 +106,7 @@ unique(pot$plant_type) # <- hay 5 tipos de plantas
 
 A continuación se realizó un análisis exploratorio donde se obtuvieron diferentes gráficos, algunos de ellos fueron los siguientes:
 
-![Plat_rank](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plat_rank.png "Plat_rank")
+![Plat_rank](graphs/plat_rank.png "Plat_rank")
 
 ![Plot_gen2](https://github.com/AteneaCB/Equipo2/blob/main/graphs/plot_gen2.png "Plot_gen2")
 
