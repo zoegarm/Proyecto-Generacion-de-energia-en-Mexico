@@ -212,6 +212,11 @@ aggregate(tsTotalNacional_1) %>%
   plot(main = "Consumo eléctrico por Estado Gw/h", ylab= "Consumo Gw/h", xlab = "Año",
        sub = "Consumo en el periodo 2012 - 2018",
        col = "red", lty = 3 ,lwd = 2)
+```
+
+Finalmente obtuve las series de tiempo y realicé representaciones para el consumo de energía en barras y en tipo pastel: 
+
+```R
 
 
 
@@ -261,3 +266,4 @@ barplot(height = cakeE$Consumo, names = cakeE$Estado, col = "#bd032c", horiz = F
         font.lab = 1, col.lab = "black", cex.lab = 2,
         main = "Porcentaje de Consumo Eléctrico Por Entidad GW/h") 
 ```
+
