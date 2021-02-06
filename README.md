@@ -2,7 +2,10 @@
 
 ## Proyecto: Generación de energía en México: alternativas limpias.
 
-### Equipo 2: Zoé Ariel García Martínez, Gerardo Miguel Pérez Solis, Atenea De La Cruz Brito
+### Equipo 2: 
+- Atenea De La Cruz Brito
+- Zoé Ariel García Martínez 
+- Gerardo Miguel Pérez Solis 
 
 Primero realicé una conversión de los archivos .dbf a .csv, que bajamos de la página: https://maps.nrel.gov/rede-mexico/
 
