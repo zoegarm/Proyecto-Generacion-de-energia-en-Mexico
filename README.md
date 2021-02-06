@@ -1,9 +1,8 @@
-# Equipo2
-Curso BEDU-Santander DS: Trabajo Equipo 2
+# Curso BEDU-Santander DS: Trabajo Equipo 2
 
-Proyecto: Generación de energía en México: alternativas limpias.
+## Proyecto: Generación de energía en México: alternativas limpias.
 
-## Zoé Ariel García Martínez
+### Equipo 2: Zoé Ariel García Martínez, Gerardo Miguel Pérez Solis, Atenea De La Cruz Brito
 
 Primero realicé una conversión de los archivos .dbf a .csv, que bajamos de la página: https://maps.nrel.gov/rede-mexico/
 
