@@ -192,5 +192,5 @@ También se realizó un análisis del consumo energético promedio a través de 
 Por último se realizó una gráfica para comparar el potencial de cada entidad federativa con respecto a su consumo, de lo que podemos argumentar, que si bien la potencia energética no cubre el consumo eléctrico en todos los casos, es cierto que podría cubrir una gran parte del mismo, ayudando a frenar las emisiones de CO2.
 
 <p align="center">
-  <img src="APP/wwww/ConsumovsPot.png" "Consumo vs Potencial" alt="NF"/>
+  <img src="APP/www/ConsumovsPot.png" "Consumo vs Potencial" alt="NF"/>
 </p>
