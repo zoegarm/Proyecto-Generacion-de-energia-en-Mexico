@@ -449,27 +449,6 @@ cakeE <- rename(cakeE, Consumo = V1)
 
 cakeE[,"Porcentaje"] <- (cakeE$Consumo/sum(cakeE$Consumo))*100
 
-colorr = c("#af601a", "#273746", "#424949", "#eaeded", "#b3b6b7", "#f6ddcc",
-           "#049514", "#260ea4", "#97fd18", "#bd032c", "#10f2c5",
-           "#786913", "#b630b3", "#c62d58", "#1465e1", "#7c15a2", 
-           "#7644f4", "#4a8ce4", "#f38f7c", "#d3b928", "#45230b",
-           "#8692b4", "#f0f80c", "#b54f32", "#f3e4cf", "#7a6cfb",
-           "#f553d6", "#675a02", "#dbe2d9", "#e8f73f",
-           "#c15583", "#fce99a")
-
-length(colorr); colorr[10]
-
-pie(cakeE$Consumo)
-
-ggplot(cakeE, mapping = aes(x = "", y= Porcentaje, fill =Estado)) +
-  geom_bar(stat = "identity", color = "white") + 
-  coord_polar(theta = "y") + 
-  geom_text(aes(label=round(Porcentaje)),
-            position=position_stack(vjust=0.5)) + 
-  theme_void() +
-  scale_fill_manual(values=colorr) + 
-  ggtitle("Porcentaje de Consumo Eléctrico Por Entidad")
-
 par(mar=c(11,4,4,4))
 barplot(height = cakeE$Porcentaje, names = cakeE$Estado, col = "#bd032c", horiz = F, las=2,
         font.lab = 1, col.lab = "black", cex.lab = 2,
@@ -479,4 +458,32 @@ par(mar=c(11,4,4,4))
 barplot(height = cakeE$Consumo, names = cakeE$Estado, col = "#bd032c", horiz = F, las=2,
         font.lab = 1, col.lab = "black", cex.lab = 2,
         main = "Porcentaje de Consumo Eléctrico Por Entidad GW/h") 
+
+#ahora realizo una gráfica para comparar el consumo de electricidad vs la potencia de generación: 
+
+# Quiero una para comparar lo gastado con el potencial total:
+
+todos.edos <- pot.mean.edo.plant
+
+cakeP <- todos.edos %>% 
+  group_by(ESTADO) %>%
+  summarise(SUMAPOT = sum(potencial))
+
+cakeP <- as.data.frame(cakeP)
+cakeE[, "Potencial"] <- cakeP$SUMAPOT
+
+par(mar=c(11,4,4,4))
+
+#Gráfica que  compara el consumo con el potencial por entidad:
+barplot(height = cakeE$Potencial, names = cakeE$Estado, col = "#C5DCF2", horiz = F, las=2,
+        font.lab = 1, col.lab = "black",
+        main = "Consumo de energía eléctrica vs Potencial eléctrico en GW/h")
+
+barplot(height = cakeE$Consumo, names = cakeE$Estado, col = rgb(0,0,1,0.5), horiz = F, las=2,
+        font.lab = 1, col.lab = "black",
+        main = "Consumo de energía eléctrica vs Potencial eléctrico en GW/h", add = T) 
+
+legend(x = "right", legend = c("Potencial", "Consumo"), fill = c("#C5DCF2", rgb(0,0,1,0.5)), bty = "n", y.intersp = 1)
+
+
 
