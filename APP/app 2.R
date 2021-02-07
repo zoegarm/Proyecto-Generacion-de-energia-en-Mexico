@@ -11,7 +11,6 @@ library(ggplot2)
 library(leaflet)
 library(leaflet.extras)
 library(sf)
-#library(tidyverse)
 library(rworldxtra)
 
 setwd("/CURSO DATA SCIENCE/Proyecto") #Cambiar según usuario
@@ -116,15 +115,11 @@ ui <-
         )
 
 ########################## II. Server ##########################
-## Aquí me quedé ## 
 #Server
 server <- function(input, output) {
     
-        #Presentación 
-
-    
+    #Presentación     
     #Análisis Exploratorio de Datos
-    #NOTA Atenea: Son sólo imágenes, no sé que poner aquí
     
     #Datos
     #Data Table genreacion
@@ -172,7 +167,7 @@ server <- function(input, output) {
     
     
     outfile <- tempfile(fileext = ".png")
-    #hago la mañaaaaaa: 
+    #Consumo 
     output$image1 <- renderImage({
         if (is.null(input$ts))
             return(NULL)
