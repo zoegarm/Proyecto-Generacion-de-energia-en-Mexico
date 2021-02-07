@@ -19,6 +19,7 @@ México tiene un gran potencial para la generación de energía limpia y puede e
 - Zoé Ariel García Martínez 
 - Gerardo Miguel Pérez Solis 
 
+#En orden de responder las hipótesis se realizó una investigación.
 
 Primero se realizó la descarga de los dataset principales de la siguiente página: https://maps.nrel.gov/rede-mexico/
 
