@@ -29,7 +29,7 @@ Se tomaron los archivos .dbf y se transformaron en archivos .csv:
 library(foreign)
 
 #Directorio de trabajo
-setwd("Aqui va la direccion")
+#setwd("Aqui va la direccion")
 
 # Extracción de datos .dbf y transformación a .csv
 i_gen <- read.dbf("/mx_inventory_gen_new/mx_inventory_gen_new.dbf")
